@@ -16,11 +16,13 @@ dataset$EstimatedSalary=
 install.packages("BiocManager")
 library(BiocManager)
 
-install.packages(pcaM) #installing the pcaMethods package, one time thing
+install.packages(pcaMethods) #installing the pcaMethods package, one time thing
 library(pcaMethods) # To use knn and lls impute
 
 source("https://bioconductor.org/biocLite.R")
 biocLite("pcaMethods")
+  
+BiocManager::install(c("GenomicFeatures", "AnnotationDbi")) # Download specific packages
 
 result <- llsImpute(dataset, k = 10, correlation="pearson", allVariables=TRUE)
 
