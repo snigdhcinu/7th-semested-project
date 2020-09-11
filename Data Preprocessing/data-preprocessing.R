@@ -13,25 +13,28 @@ dataset$EstimatedSalary=
 
 # Using LLS Impute
 
-install.packages("BiocManager")
+#install.packages("BiocManager")
 library(BiocManager)
 
-install.packages(pcaMethods) #installing the pcaMethods package, one time thing
+#install.packages(pcaMethods) #installing the pcaMethods package, one time thing
 library(pcaMethods) # To use knn and lls impute
 
-source("https://bioconductor.org/biocLite.R")
-biocLite("pcaMethods")
-  
-BiocManager::install(c("GenomicFeatures", "AnnotationDbi")) # Download specific packages
+#source("https://bioconductor.org/biocLite.R")
+#biocLite("pcaMethods")
 
-result <- llsImpute(dataset, k = 10, correlation="pearson", allVariables=TRUE)
+#install.packages('pcaMethods')  
+dataset <- data.matrix(dataset)
+result_lls <- llsImpute(dataset, k = 3, center = FALSE, completeObs = TRUE,
+                    correlation = "pearson", allVariables = TRUE, maxSteps = 100,
+                    xval = NULL, verbose = FALSE)
+
 
 
 
 #Using kNN impute
 
-install.packages("VIM") #installing the VIM package, one time thing
+#install.packages("VIM") #installing the VIM package, one time thing
 library(VIM) # To use knn and lls impute
 
-result <- kNN(dataset,variable=c("EstimatedSalary"),k=4)
+result_knn <- kNN(dataset,variable=c("EstimatedSalary"),k=5)
 view(result)
